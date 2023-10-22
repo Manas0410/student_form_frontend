@@ -5,13 +5,13 @@ import FormDataDisplay from "./FormdataDisplay";
 import "./componentStyles.css";
 
 function App() {
-  const [flag, setFlag] = useState("");
+  const [flag, setFlag] = useState(false);
 
   return (
     <>
       <div className="app-container">
         <div className="form-container">
-          <Form setFlag={setFlag} />
+          <Form setFlag={setFlag} flag={flag} />
         </div>
         <div className="data-display-container">
           <FormDataDisplay flag={flag} />

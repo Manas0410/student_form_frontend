@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import MultiSelectComp from "./multiselect";
 import axios from "axios";
 
-const Form = ({ setFlag }) => {
+const Form = ({ setFlag, flag }) => {
   const [studentData, setStudentData] = useState({
     rollNo: 0,
     name: "",
@@ -28,17 +29,17 @@ const Form = ({ setFlag }) => {
       .post("https://studentbackend-lza9.onrender.com/subjects", studentData)
       .then((response) => {
         console.log(response.data);
+        setStudentData({
+          rollNo: 0,
+          name: "",
+          extraSub: "",
+          subjects: [],
+        });
+        setFlag(!flag);
       })
       .catch((error) => {
         console.error(error);
       });
-    setStudentData({
-      rollNo: 0,
-      name: "",
-      extraSub: "",
-      subjects: [],
-    });
-    setFlag("new data added");
   };
   return (
     <div>
