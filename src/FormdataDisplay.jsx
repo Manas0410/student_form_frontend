@@ -12,6 +12,8 @@ const FormDataDisplay = ({ flag }) => {
     axios
       .get("https://studentbackend-lza9.onrender.com/subjects")
       .then((data) => setStudentData(data.data));
+
+    return () => setStudentData([]);
   }, [flag, del, edit]);
 
   return (

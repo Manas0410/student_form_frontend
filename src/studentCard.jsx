@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import "./componentStyles.css";
+import MultiSelectComp from "./multiselect";
 import axios from "axios";
 
 const StudentCard = ({ student, setDelete, setEdit }) => {
   const [studentData, setStudentData] = useState({ ...student });
   const [deleteButtonDisable, setDeleteButtonDisable] = useState(false);
   const [nameFieldToggle, setNameFieldToggle] = useState(true);
-  const [rollnoFieldToggle, setRollnoFieldToggle] = useState(true);
+  const [editFieldToggle, setEditFieldToggle] = useState(true);
 
   useEffect(() => {
     return () => {
-      setDeleteButtonDisable(true);
+      setDeleteButtonDisable(false);
     };
   }, []);
   //function to delete data
@@ -43,63 +44,83 @@ const StudentCard = ({ student, setDelete, setEdit }) => {
     setNameFieldToggle(true);
     callAPIforPutReq();
   };
-  const rollnoBlur = () => {
-    setRollnoFieldToggle(true);
+
+  const chkbxChange = (e) => {
+    if (e.target.checked) {
+      setStudentData((prev) => {
+        let temp = { ...prev };
+        temp.extraSubject = "yes";
+        return temp;
+      });
+    }
+  };
+
+  const editData = () => {
+    setEditFieldToggle(true);
     callAPIforPutReq();
   };
-  return (
-    <div className="student-card">
-      <div className="student-info">
-        {nameFieldToggle ? (
-          <p
-            onClick={() => {
-              setNameFieldToggle(false);
-            }}
-          >
-            Name: {studentData.name}
-          </p>
-        ) : (
-          <input
-            value={studentData.name}
-            onBlur={nameBlur}
-            onChange={(e) => studentDataUpdate(e)}
-            name="name"
-          />
-        )}
-        {rollnoFieldToggle ? (
-          <p
-            onClick={() => {
-              setRollnoFieldToggle(false);
-            }}
-          >
-            Roll No: {studentData.rollNo}
-          </p>
-        ) : (
-          <input
-            value={studentData.rollNo}
-            onBlur={rollnoBlur}
-            onChange={(e) => studentDataUpdate(e)}
-            type="number"
-            name="rollNo"
-          />
-        )}
-        <p>Extra Subject: {studentData.extraSubject}</p>
-      </div>
 
-      <div className="student-subjects">
-        <h3>Subjects:</h3>
-        <ul>
-          {studentData.subjects.map((subject, index) => (
-            <li key={index}>{subject}</li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <button>EDIT</button>
-        <button onClick={deleteCard} disabled={deleteButtonDisable}>
-          DELETE
-        </button>
-      </div>
+  return (
+    <div>
+      {editFieldToggle ? (
+        <div className="student-card">
+          <h3>Roll No. {studentData.rollNo}</h3>
+          {nameFieldToggle ? (
+            <p
+              onClick={() => {
+                setNameFieldToggle(false);
+              }}
+            >
+              Name: {studentData.name}
+            </p>
+          ) : (
+            <input
+              value={studentData.name}
+              onBlur={nameBlur}
+              onChange={(e) => studentDataUpdate(e)}
+              name="name"
+            />
+          )}
+
+          <p>Extra Subject: {studentData.extraSubject}</p>
+
+          <div className="student-subjects">
+            <h3>Subjects:</h3>
+            <ul>
+              {studentData.subjects.map((subject, index) => (
+                <li key={index}>{subject}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <button onClick={() => setEditFieldToggle(false)}>EDIT</button>
+            <button onClick={deleteCard} disabled={deleteButtonDisable}>
+              DELETE
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="student-card">
+          <h3>Roll No. {studentData.rollNo}</h3>
+          <div>
+            Name:
+            <input
+              value={studentData.name}
+              onChange={(e) => studentDataUpdate(e)}
+              name="name"
+            />
+          </div>
+          <div>
+            <span>Extra Subjects</span>
+            <input type="checkbox" name="extraSubject" onChange={chkbxChange} />
+          </div>
+          <div className="selectItem">
+            <MultiSelectComp setStudentData={setStudentData} />
+          </div>
+
+          <button onClick={editData}>SAVE</button>
+        </div>
+      )}
     </div>
   );
 };
