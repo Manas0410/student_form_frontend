@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import Multiselect from "multiselect-react-dropdown";
 
@@ -37,13 +38,15 @@ const MyComponent = ({ setStudentData }) => {
   };
 
   return (
-    <Multiselect
-      options={options}
-      selectedValues={forApi}
-      onSelect={onSelect}
-      onRemove={onRemove}
-      displayValue="name"
-    />
+    <div style={{ width: "70%" }}>
+      <Multiselect
+        options={options}
+        selectedValues={forApi}
+        onSelect={onSelect}
+        onRemove={onRemove}
+        displayValue="name"
+      />
+    </div>
   );
 };
 

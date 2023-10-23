@@ -64,7 +64,7 @@ const StudentCard = ({ student, setDelete, setEdit }) => {
     <div>
       {editFieldToggle ? (
         <div className="student-card">
-          <h3>Roll No. {studentData.rollNo}</h3>
+          <p>Roll No: {studentData.rollNo}</p>
           {nameFieldToggle ? (
             <p
               onClick={() => {
@@ -93,8 +93,17 @@ const StudentCard = ({ student, setDelete, setEdit }) => {
             </ul>
           </div>
           <div>
-            <button onClick={() => setEditFieldToggle(false)}>EDIT</button>
-            <button onClick={deleteCard} disabled={deleteButtonDisable}>
+            <button
+              onClick={() => setEditFieldToggle(false)}
+              className="button-style bn49"
+            >
+              EDIT
+            </button>
+            <button
+              onClick={deleteCard}
+              disabled={deleteButtonDisable}
+              className="button-style bn49"
+            >
               DELETE
             </button>
           </div>
@@ -118,7 +127,9 @@ const StudentCard = ({ student, setDelete, setEdit }) => {
             <MultiSelectComp setStudentData={setStudentData} />
           </div>
 
-          <button onClick={editData}>SAVE</button>
+          <button onClick={editData} className="bn49">
+            SAVE
+          </button>
         </div>
       )}
     </div>

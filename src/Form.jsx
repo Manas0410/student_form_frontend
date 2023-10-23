@@ -35,6 +35,9 @@ const Form = ({ setFlag, flag }) => {
   };
   //function to set data to list on submit
   const submit = () => {
+    if (!studentData.rollNo || !studentData.name) {
+      return;
+    }
     axios
       .post("https://studentbackend-lza9.onrender.com/subjects", studentData)
       .then((response) => {
@@ -54,39 +57,40 @@ const Form = ({ setFlag, flag }) => {
   };
   return (
     <div className="form">
-      <div>
-        <span>Name:</span>
-        <input
-          name="name"
-          onChange={studentDataUpdate}
-          value={studentData?.name}
-        />
-      </div>
-      <br />
-      <div>
-        <span>Roll No:</span>
-        <input
-          name="rollNo"
-          onChange={studentDataUpdate}
-          value={studentData.rollNo}
-          type="number"
-        />
-      </div>
-      <br />
-      <div>
-        <span>Extra Subjects</span>
+      <div className="field">Name:</div>
+      <input
+        name="name"
+        onChange={studentDataUpdate}
+        value={studentData?.name}
+        className="field"
+      />
+
+      <div className="field">Roll No:</div>
+      <input
+        name="rollNo"
+        onChange={studentDataUpdate}
+        value={studentData.rollNo}
+        type="number"
+        className="field"
+      />
+
+      <div className="subject-field">
+        <div className="field">Extra Subjects</div>
         <input
           type="checkbox"
           name="extraSubject"
           onChange={chkbxChange}
           checked={cbox}
+          className="field"
         />
       </div>
 
-      <br />
       {/* multiselect for adding subjects */}
+
       <MultiSelectComp setStudentData={setStudentData} />
-      <button onClick={submit}>submit</button>
+      <button onClick={submit} className="bn49">
+        submit
+      </button>
     </div>
   );
 };
